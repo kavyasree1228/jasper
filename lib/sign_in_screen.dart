@@ -1,26 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jasper/auth_services.dart';
 import 'package:jasper/weight_entry_form.dart';
-import 'package:jasper/weight_entry_screen.dart';
 
 class SignInScreen extends StatefulWidget {
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
 
-Future<void> signInAnonymously(BuildContext context) async {
-  try {
-    await FirebaseAuth.instance.signInAnonymously();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => WeightEntryScreen()),
-    );
-  } catch (e) {
-    print(e.toString());
-  }
-}
-
 class _SignInScreenState extends State<SignInScreen> {
+  Future<void> _signIn() async {
+    await AuthService().signInAnonymously();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => WeightEntryForm()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                await signInAnonymously(context);
+                _signIn();
               },
               child: Text('Sign In'),
             ),
