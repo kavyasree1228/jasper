@@ -6,6 +6,10 @@ Assumptions i made : That user cannot start making weight entries without signin
 Video : https://github.com/kavyasree1228/jasper/blob/main/Screen%20Recording%202023-12-04%20at%203.26.02%20PM.mov
 
 ## Getting Started
+1.  Set up instructions
+Basic Flutter setup required and Firebase console project settings 
+● Assumptions you made, - User cannot log entries without signing in . 
+● Video of working application - https://github.com/kavyasree1228/jasper/blob/main/Screen%20Recording%202023-12-04%20at%203.26.02%20PM.mov
 
 This project is a starting point for a Flutter application.
 
@@ -17,3 +21,5 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
