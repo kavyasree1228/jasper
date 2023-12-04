@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jasper/auth_services.dart';
+import 'package:jasper/edit_weight_screen.dart';
 import 'package:jasper/sign_in_screen.dart';
 import 'package:jasper/weight_entry_model.dart';
 import 'package:jasper/weight_entry_service.dart';
@@ -28,8 +29,7 @@ class _WeightEntryScreenState extends State<WeightEntryForm> {
   Future<void> _submitWeight() async {
     await _weightEntryService.submitWeight(_weightController.text);
     setState(() {
-      _weightController
-          .clear(); // do not forget to clear weight after successful submission
+      _weightController.clear();
     });
   }
 
@@ -37,9 +37,20 @@ class _WeightEntryScreenState extends State<WeightEntryForm> {
     await _weightEntryService.deleteWeight(documentId);
   }
 
+  Future<void> _editWeight(WeightEntry weight) async {
+    // Navigate to a new screen for weight editing
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditWeightScreen(
+          weight: weight,
+          weightsCollection: _weightsCollection,
+        ),
+      ),
+    );
+  }
+
   Future<void> _signOut() async {
     await _authService.signOut();
-    // ignore: use_build_context_synchronously
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => SignInScreen()),
     );
@@ -112,9 +123,18 @@ class _WeightEntryScreenState extends State<WeightEntryForm> {
               return ListTile(
                 title: Text('Weight: ${weights[index].weight}'),
                 subtitle: Text('Date: ${weights[index].formattedTimestamp}'),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete),
-                  onPressed: () => _deleteWeight(weights[index].documentId),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editWeight(weights[index]),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => _deleteWeight(weights[index].documentId),
+                    ),
+                  ],
                 ),
               );
             },
