@@ -1,6 +1,9 @@
 # jasper
 
 A new Flutter project.
+Setup - Basic Flutter setup and firebase console project setup . 
+Assumptions i made : That user cannot start making weight entries without signing in . 
+Video : https://github.com/kavyasree1228/jasper/blob/main/Screen%20Recording%202023-12-04%20at%203.26.02%20PM.mov
 
 ## Getting Started
 
