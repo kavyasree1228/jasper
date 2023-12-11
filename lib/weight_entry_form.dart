@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jasper/auth_services.dart';
 import 'package:jasper/edit_weight_screen.dart';
 import 'package:jasper/sign_in_screen.dart';
@@ -26,11 +27,14 @@ class _WeightEntryScreenState extends State<WeightEntryForm> {
     _authService = AuthService();
   }
 
-  Future<void> _submitWeight() async {
-    await _weightEntryService.submitWeight(_weightController.text);
-    setState(() {
-      _weightController.clear();
-    });
+  submitWeight() {
+    _weightEntryService.submitWeight(_weightController.text);
+    Future.delayed(
+        const Duration(milliseconds: 100),
+        () => setState(() {
+              print('clear form-------------');
+              _weightController.clear();
+            }));
   }
 
   Future<void> _deleteWeight(String documentId) async {
@@ -79,10 +83,13 @@ class _WeightEntryScreenState extends State<WeightEntryForm> {
                 TextFormField(
                   controller: _weightController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                 ),
                 const SizedBox(height: 16.0),
                 ElevatedButton(
-                  onPressed: _submitWeight,
+                  onPressed: submitWeight,
                   child: const Text('Submit'),
                 ),
               ],
